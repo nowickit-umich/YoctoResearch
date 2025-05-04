@@ -1,0 +1,33 @@
+name: Build yocto-builder
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/<your-org-or-user>/yocto-builder:latest
+      options: --privileged
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./docker
+        file: ./docker/yocto_builder/dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/yocto-builder:latest
+
+
+
