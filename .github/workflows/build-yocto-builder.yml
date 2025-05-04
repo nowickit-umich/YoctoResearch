@@ -6,10 +6,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    container:
-      image: ghcr.io/<your-org-or-user>/yocto-builder:latest
-      options: --privileged
-
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
