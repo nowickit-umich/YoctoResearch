@@ -1,0 +1,28 @@
+name: Build Poky
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    # this can be assigned to a more powerful runner to improve build time
+    runs-on: ubuntu-latest
+
+    # use the builder container
+    container: 
+      image: ghcr.io/${{ github.repository_owner }}/yoctoresearch/yocto-builder:latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+        
+      #- name: Initialize Enviornment
+      #  run: source oe-init-build-env build
+
+
+      - name: Build
+        run:  |
+          source oe-init-build-env build
+          bitbake core-image-minimal
+        
+      
