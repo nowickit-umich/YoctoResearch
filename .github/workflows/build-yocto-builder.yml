@@ -21,7 +21,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: ./docker
-        file: ./docker/yocto_builder/dockerfile
+        file: ./docker/yocto-builder/dockerfile
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/yocto-builder:latest
 
