@@ -19,9 +19,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
         
-      #- name: Initialize Enviornment
-      #  run: source oe-init-build-env build
-      
+      - name: Debug
+        run: |
+          echo "Current workspace: $GITHUB_WORKSPACE"
+          ls -alh $GITHUB_WORKSPACE
+        
       - name: Change Ownership of the Workspace
         run: |
           chown -R builder:builder $GITHUB_WORKSPACE
@@ -60,5 +62,5 @@ jobs:
         with:
           name: yocto-images
           path: |
-            $GITHUB_WORKSPACE/build/tmp/deploy/images/**/core-image-*.{wic,ext4,tar.gz,bin,rootfs.*}
+            $GITHUB_WORKSPACE/build/tmp/deploy/images/qemux86-64/core-image-*
             
