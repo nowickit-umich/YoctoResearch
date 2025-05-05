@@ -25,6 +25,7 @@ jobs:
       - name: Build
         shell: bash
         run:  |
+          su builder
           source oe-init-build-env build
           bitbake core-image-minimal
 
