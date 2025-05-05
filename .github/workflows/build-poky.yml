@@ -62,6 +62,7 @@ jobs:
         run: |
           echo "Setup build"
           ls -alh ${{ github.workspace }}/build
+          sleep 120m
 
       # Cache the downloads and sstate-cache directories
       - name: Save Yocto downloads and sstate-cache
