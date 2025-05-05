@@ -22,37 +22,37 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo "Current workspace: $GITHUB_WORKSPACE"
-          ls -alh $GITHUB_WORKSPACE
+          echo "Current workspace: ${{ github.workspace }}"
+          ls -alh ${{ github.workspace }}
           source oe-init-build-env build
           echo "Setup build"
-          ls -alh $GITHUB_WORKSPACE/build
+          ls -alh ${{ github.workspace }}/build
         
       - name: Change Ownership of the Workspace
         run: |
-          chown -R builder:builder $GITHUB_WORKSPACE
+          chown -R builder:builder ${{ github.workspace }}
 
       # Cache the downloads and sstate-cache directories
       - name: Restore Yocto downloads and sstate-cache
         uses: actions/cache/restore@v4
         with:
           path: |
-            $GITHUB_WORKSPACE/build/downloads
-            $GITHUB_WORKSPACE/build/sstate-cache
+            ${{ github.workspace }}/build/downloads
+            ${{ github.workspace }}/build/sstate-cache
           key: ${{ runner.os }}-yocto-cache
 
       - name: Debug-2
         shell: bash
         run: |
           echo "Setup build"
-          ls -alh $GITHUB_WORKSPACE/build
+          ls -alh ${{ github.workspace }}/build
 
       # build the image
       - name: Build
         shell: bash
         run: |
           su - builder -c "
-            cd $GITHUB_WORKSPACE
+            cd ${{ github.workspace }}
             source oe-init-build-env build
             bitbake core-image-minimal
           "
@@ -61,15 +61,15 @@ jobs:
         shell: bash
         run: |
           echo "Setup build"
-          ls -alh $GITHUB_WORKSPACE/build
+          ls -alh ${{ github.workspace }}/build
 
       # Cache the downloads and sstate-cache directories
       - name: Save Yocto downloads and sstate-cache
         uses: actions/cache/save@v4
         with:
           path: |
-            $GITHUB_WORKSPACE/build/downloads
-            $GITHUB_WORKSPACE/build/sstate-cache
+            ${{ github.workspace }}/build/downloads
+            ${{ github.workspace }}/build/sstate-cache
           key: ${{ runner.os }}-yocto-cache
 
       # save the image by uploading artifact
@@ -78,5 +78,5 @@ jobs:
         with:
           name: yocto-images
           path: |
-            $GITHUB_WORKSPACE/build/tmp/deploy/images/qemux86-64/core-image-*
+            ${{ github.workspace }}/build/tmp/deploy/images/qemux86-64
             
