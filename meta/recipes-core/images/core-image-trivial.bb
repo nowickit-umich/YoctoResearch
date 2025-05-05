@@ -2,7 +2,7 @@ SUMMARY = "Dummy CI test recipe"
 LICENSE = "MIT"
 
 # fetch a file to test download cache
-SRC_URI = "https://ftp.gnu.org/gnu/wget/wget-1.21.4.tar.gz"  # Example URL
+SRC_URI = "https://ftp.gnu.org/gnu/wget/wget-1.21.4.tar.gz"
 S = "${WORKDIR}/wget-1.21.4"
 
 do_fetch() {
