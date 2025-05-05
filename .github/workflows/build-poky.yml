@@ -20,6 +20,7 @@ jobs:
 
         
       - name: Debug
+        shell: bash
         run: |
           echo "Current workspace: $GITHUB_WORKSPACE"
           ls -alh $GITHUB_WORKSPACE
