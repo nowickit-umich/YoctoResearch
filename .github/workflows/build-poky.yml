@@ -23,6 +23,9 @@ jobs:
         run: |
           echo "Current workspace: $GITHUB_WORKSPACE"
           ls -alh $GITHUB_WORKSPACE
+          source oe-init-build-env build
+          echo "Setup build"
+          ls -alh $GITHUB_WORKSPACE/build
         
       - name: Change Ownership of the Workspace
         run: |
