@@ -44,9 +44,6 @@ jobs:
       - name: Debug-2
         shell: bash
         run: |
-          echo "Current workspace: $GITHUB_WORKSPACE"
-          ls -alh $GITHUB_WORKSPACE
-          source oe-init-build-env build
           echo "Setup build"
           ls -alh $GITHUB_WORKSPACE/build
 
@@ -63,9 +60,6 @@ jobs:
       - name: Debug-3
         shell: bash
         run: |
-          echo "Current workspace: $GITHUB_WORKSPACE"
-          ls -alh $GITHUB_WORKSPACE
-          source oe-init-build-env build
           echo "Setup build"
           ls -alh $GITHUB_WORKSPACE/build
 
