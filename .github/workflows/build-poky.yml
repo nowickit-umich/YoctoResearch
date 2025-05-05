@@ -10,6 +10,7 @@ jobs:
     # use the builder container
     container: 
       image: ghcr.io/${{ github.repository_owner }}/yoctoresearch/yocto-builder:latest
+      options: --user root
     
     steps:
       - name: Checkout repository
