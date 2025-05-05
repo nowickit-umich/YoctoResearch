@@ -5,7 +5,7 @@ on: workflow_dispatch
 jobs:
   build:
     # this can be assigned to a more powerful runner to improve build time
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     # use the builder container
     container: 
