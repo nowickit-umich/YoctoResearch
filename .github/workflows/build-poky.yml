@@ -42,7 +42,7 @@ jobs:
           su - builder -c "
             cd $GITHUB_WORKSPACE
             source oe-init-build-env build
-            bitbake core-image-trivial
+            bitbake core-image-minimal
           "
 
       # Cache the downloads and sstate-cache directories
