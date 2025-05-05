@@ -31,8 +31,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: |
-            $GITHUB_WORKSPACE/downloads
-            $GITHUB_WORKSPACE/build/tmp/sstate-cache
+            $GITHUB_WORKSPACE/build/downloads
+            $GITHUB_WORKSPACE/build/sstate-cache
           key: ${{ runner.os }}-yocto-cache
 
       # build the image
@@ -50,8 +50,8 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: |
-            $GITHUB_WORKSPACE/downloads
-            $GITHUB_WORKSPACE/build/tmp/sstate-cache
+            $GITHUB_WORKSPACE/build/downloads
+            $GITHUB_WORKSPACE/build/sstate-cache
           key: ${{ runner.os }}-yocto-cache
 
       # save the image by uploading artifact
