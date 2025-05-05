@@ -5,11 +5,12 @@ on: workflow_dispatch
 jobs:
   build:
     # this can be assigned to a more powerful runner to improve build time
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     # use the builder container
     container: 
       image: ghcr.io/${{ github.repository_owner }}/yoctoresearch/yocto-builder:latest
+      options: --user root
     
     steps:
       - name: Checkout repository
@@ -25,5 +26,12 @@ jobs:
         run:  |
           source oe-init-build-env build
           bitbake core-image-minimal
-        
+
+      #- name: Save Image
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: yocto-images
+      #    path: |
+      #      build/tmp/deploy/images/**/core-image-*.{wic,ext4,tar.gz,bin,rootfs.*}
+      #      build/tmp/deploy/images/**/*.manifest
       
