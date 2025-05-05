@@ -27,15 +27,13 @@ jobs:
           chown -R builder:builder $GITHUB_WORKSPACE
 
       # Cache the downloads and sstate-cache directories
-      - name: Cache Yocto downloads and sstate-cache
-        uses: actions/cache@v4
+      - name: Restore Yocto downloads and sstate-cache
+        uses: actions/cache/restore@v4
         with:
           path: |
             $GITHUB_WORKSPACE/downloads
             $GITHUB_WORKSPACE/build/tmp/sstate-cache
-          key: yocto-cache
-          restore-keys: |
-            yocto-cache
+          key: ${{ runner.os }}-yocto-cache
 
       # build the image
       - name: Build
@@ -46,6 +44,15 @@ jobs:
             source oe-init-build-env build
             bitbake core-image-minimal
           "
+
+      # Cache the downloads and sstate-cache directories
+      - name: Save Yocto downloads and sstate-cache
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            $GITHUB_WORKSPACE/downloads
+            $GITHUB_WORKSPACE/build/tmp/sstate-cache
+          key: ${{ runner.os }}-yocto-cache
 
       # save the image by uploading artifact
       - name: Save Image
