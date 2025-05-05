@@ -24,7 +24,7 @@ jobs:
       
       - name: Change Ownership of the Workspace
         run: |
-          sudo chown -R builder:builder $GITHUB_WORKSPACE
+          chown -R builder:builder $GITHUB_WORKSPACE
 
       - name: Build
         shell: bash
