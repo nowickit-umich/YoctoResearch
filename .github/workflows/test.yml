@@ -1,0 +1,43 @@
+name: Cache Test
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu:24.04
+
+    container: 
+      image: ubuntu:24.04
+    
+    steps:
+
+      - name: Debug 1
+        shell: bash
+        run: |
+          pwd
+          ls -lah
+
+      - name: Restore Cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ./test.txt
+          key: test-cache
+
+      - name: Debug 2
+        shell: bash
+        run: |
+          pwd
+          ls -lah
+
+      - name: Create dummy files
+        shell: bash
+        run: |
+          echo "Test" > ./test.txt
+
+      - name: Save Cache
+        uses: actions/cache/save@v4
+        with:
+          path: ./test.txt
+          key: test-cache
+
+          
