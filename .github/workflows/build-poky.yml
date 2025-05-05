@@ -35,11 +35,10 @@ jobs:
             bitbake core-image-minimal
           "
 
-      #- name: Save Image
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: yocto-images
-      #    path: |
-      #      build/tmp/deploy/images/**/core-image-*.{wic,ext4,tar.gz,bin,rootfs.*}
-      #      build/tmp/deploy/images/**/*.manifest
-      
+      - name: Save Image
+        uses: actions/upload-artifact@v4
+        with:
+          name: yocto-images
+          path: |
+            $GITHUB_WORKSPACE/build/tmp/deploy/images/**/core-image-*.{wic,ext4,tar.gz,bin,rootfs.*}
+            
