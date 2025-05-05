@@ -28,7 +28,7 @@ jobs:
 
       # Cache the downloads and sstate-cache directories
       - name: Cache Yocto downloads and sstate-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             $GITHUB_WORKSPACE/downloads
