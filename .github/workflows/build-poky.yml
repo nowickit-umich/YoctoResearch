@@ -41,6 +41,15 @@ jobs:
             $GITHUB_WORKSPACE/build/sstate-cache
           key: ${{ runner.os }}-yocto-cache
 
+      - name: Debug-2
+        shell: bash
+        run: |
+          echo "Current workspace: $GITHUB_WORKSPACE"
+          ls -alh $GITHUB_WORKSPACE
+          source oe-init-build-env build
+          echo "Setup build"
+          ls -alh $GITHUB_WORKSPACE/build
+
       # build the image
       - name: Build
         shell: bash
@@ -50,6 +59,15 @@ jobs:
             source oe-init-build-env build
             bitbake core-image-minimal
           "
+
+      - name: Debug-3
+        shell: bash
+        run: |
+          echo "Current workspace: $GITHUB_WORKSPACE"
+          ls -alh $GITHUB_WORKSPACE
+          source oe-init-build-env build
+          echo "Setup build"
+          ls -alh $GITHUB_WORKSPACE/build
 
       # Cache the downloads and sstate-cache directories
       - name: Save Yocto downloads and sstate-cache
