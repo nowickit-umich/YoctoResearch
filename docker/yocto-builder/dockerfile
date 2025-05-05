@@ -13,6 +13,5 @@ RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 RUN useradd -ms /bin/bash builder && \
     echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-USER builder
 WORKDIR /home/builder
 
