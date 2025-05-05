@@ -27,7 +27,6 @@ jobs:
         shell: bash
         run: |
           su - builder -c "
-            cd $GITHUB_WORKSPACE
             source oe-init-build-env build
             bitbake core-image-minimal
           "
