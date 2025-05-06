@@ -37,7 +37,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           # use hash of all config files as key
-          key: yocto-sstate-${{ hashFiles('conf/*.conf') }}
+          key: yocto-sstate-${{ hashFiles('$GITHUB_WORKSPACE/build/conf/*.conf') }}
           path: |
             ./build/sstate-cache
           # fallback to most recent cache
@@ -49,7 +49,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           # use hash of all config files as key
-          key: yocto-downloads-${{ hashFiles('conf/*.conf') }}
+          key: yocto-downloads-${{ hashFiles('$GITHUB_WORKSPACE/build/conf/*.conf') }}
           path: |
             ./build/downloads
           # fallback to most recent cache
@@ -86,8 +86,16 @@ jobs:
         uses: actions/cache/save@v4
         with:
           # use hash of all config files as key
-          key: yocto-sstate-${{ hashFiles('conf/*.conf') }}
+          key: yocto-sstate-${{ hashFiles('$GITHUB_WORKSPACE/build/conf/*.conf') }}
           path: ./build/sstate-cache
+
+      # Cache the downloads and sstate-cache directories
+      - name: Save downloads cache
+        uses: actions/cache/save@v4
+        with:
+          # use hash of all config files as key
+          key: yocto-downloads-${{ hashFiles('$GITHUB_WORKSPACE/build/conf/*.conf') }}
+          path: ./build/downloads
 
       # save the image by uploading artifact
       - name: Save Image
