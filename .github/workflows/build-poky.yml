@@ -21,6 +21,7 @@ jobs:
         
       - name: Debug
         shell: bash
+        continue-on-error: true
         run: |
           pwd
           ls -alh .
@@ -37,7 +38,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           # use hash of all config files as key
-          key: yocto-sstate-${{ hashFiles('$GITHUB_WORKSPACE/build/conf/*.conf') }}
+          key: yocto-sstate-${{ github.sha }}
           path: |
             ./build/sstate-cache
           # fallback to most recent cache
@@ -49,7 +50,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           # use hash of all config files as key
-          key: yocto-downloads-${{ hashFiles('$GITHUB_WORKSPACE/build/conf/*.conf') }}
+          key: yocto-downloads-${{ github.sha }}
           path: |
             ./build/downloads
           # fallback to most recent cache
@@ -60,6 +61,7 @@ jobs:
 
       - name: Debug-2
         shell: bash
+        continue-on-error: true
         run: |
           echo "Setup build"
           ls -alh ./build
@@ -76,6 +78,7 @@ jobs:
 
       - name: Debug-3
         shell: bash
+        continue-on-error: true
         run: |
           echo "Setup build"
           ls -alh ./build
@@ -86,7 +89,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           # use hash of all config files as key
-          key: yocto-sstate-${{ hashFiles('$GITHUB_WORKSPACE/build/conf/*.conf') }}
+          key: yocto-sstate-${{ github.sha }}
           path: ./build/sstate-cache
 
       # Cache the downloads and sstate-cache directories
@@ -94,7 +97,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           # use hash of all config files as key
-          key: yocto-downloads-${{ hashFiles('$GITHUB_WORKSPACE/build/conf/*.conf') }}
+          key: yocto-downloads-${{ github.sha }}
           path: ./build/downloads
 
       # save the image by uploading artifact
@@ -107,6 +110,7 @@ jobs:
 
       - name: Debug-4
         shell: bash
+        continue-on-error: true
         run: |
           ls -alh ./build/tmp/deploy
           ls -alh ./build/tmp/deploy/images
