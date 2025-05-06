@@ -26,7 +26,7 @@ jobs:
           ls -alh .
           source oe-init-build-env build
           echo "Setup build"
-          ls -alh ./build
+          ls -alh
         
       - name: Change Ownership of the Workspace
         run: |
