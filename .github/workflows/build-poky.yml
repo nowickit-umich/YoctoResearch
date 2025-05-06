@@ -22,30 +22,47 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo "Current workspace: $GITHUB_WORKSPACE"
-          ls -alh $GITHUB_WORKSPACE
+          pwd
+          ls -alh .
           source oe-init-build-env build
           echo "Setup build"
-          ls -alh $GITHUB_WORKSPACE/build
+          ls -alh ./build
         
       - name: Change Ownership of the Workspace
         run: |
           chown -R builder:builder $GITHUB_WORKSPACE
 
       # Cache the downloads and sstate-cache directories
-      - name: Download cache as artifact
-        uses: actions/download-artifact@v4
+      - name: Restore sstate-cache
+        uses: actions/cache/restore@v4
         with:
-          name: yocto-cache
+          # use hash of all config files as key
+          key: yocto-sstate-${{ hashFiles('conf/*.conf') }}
           path: |
-            $GITHUB_WORKSPACE/build
+            ./build/sstate-cache
+          # fallback to most recent cache
+          restore-keys: |
+            yocto-sstate-
         continue-on-error: true
+
+      - name: Restore downloads
+        uses: actions/cache/restore@v4
+        with:
+          # use hash of all config files as key
+          key: yocto-downloads-${{ hashFiles('conf/*.conf') }}
+          path: |
+            ./build/downloads
+          # fallback to most recent cache
+          restore-keys: |
+            yocto-downloads-
+        continue-on-error: true
+
 
       - name: Debug-2
         shell: bash
         run: |
           echo "Setup build"
-          ls -alh $GITHUB_WORKSPACE/build
+          ls -alh ./build
 
       # build the image
       - name: Build
@@ -61,23 +78,28 @@ jobs:
         shell: bash
         run: |
           echo "Setup build"
-          ls -alh $GITHUB_WORKSPACE/build
+          ls -alh ./build
         # sleep 120m
 
       # Cache the downloads and sstate-cache directories
-      - name: Upload cache as artifact
-        uses: actions/upload-artifact@v4
+      - name: Save sstate-cache
+        uses: actions/cache/save@v4
         with:
-          name: yocto-cache
-          path: |
-            $GITHUB_WORKSPACE/build/downloads
-            $GITHUB_WORKSPACE/build/sstate-cache
+          # use hash of all config files as key
+          key: yocto-sstate-${{ hashFiles('conf/*.conf') }}
+          path: ./build/sstate-cache
 
       # save the image by uploading artifact
       - name: Save Image
         uses: actions/upload-artifact@v4
         with:
-          name: yocto-images
+          key: yocto-poky-images
           path: |
-            $GITHUB_WORKSPACE/build/tmp/deploy/images/qemux86-64
-            
+            ./build/tmp/deploy/images/qemux86-64
+
+      - name: Debug-4
+        shell: bash
+        run: |
+          ls -alh ./build/tmp/deploy
+          ls -alh ./build/tmp/deploy/images
+          ls -alh ./build/tmp/deploy/images/qemux86-64
