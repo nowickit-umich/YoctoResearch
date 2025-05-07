@@ -104,7 +104,7 @@ jobs:
       - name: Save Image
         uses: actions/upload-artifact@v4
         with:
-          key: yocto-poky-images
+          name: yocto-poky-images-${{ github.sha }}
           path: |
             ./build/tmp/deploy/images/qemux86-64
 
