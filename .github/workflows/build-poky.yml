@@ -108,6 +108,14 @@ jobs:
           path: |
             ./build/tmp/deploy/images/qemux86-64
 
+        # save the build stats
+      - name: Save Buildstats
+        uses: actions/upload-artifact@v4
+        with:
+          name: yocto-poky-buildstats-${{ github.sha }}
+          path: |
+            ./build/tmp/buildstats
+
       - name: Debug-4
         shell: bash
         continue-on-error: true
