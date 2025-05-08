@@ -108,13 +108,21 @@ jobs:
           path: |
             ./build/tmp/deploy/images/qemux86-64
 
-        # save the build stats
+      # save the build stats
       - name: Save Buildstats
         uses: actions/upload-artifact@v4
         with:
           name: yocto-poky-buildstats-${{ github.sha }}
           path: |
             ./build/tmp/buildstats
+
+      # save scripts
+      - name: Save scripts
+        uses: actions/upload-artifact@v4
+        with:
+          name: yocto-poky-scripts-${{ github.sha }}
+          path: |
+            ./scripts
 
       - name: Debug-4
         shell: bash
